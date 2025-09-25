@@ -73,16 +73,79 @@
 
     <div style="margin: 40px auto; max-width: 400px; background: #fff; padding: 24px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.07);">
         <label style="display:block; margin-bottom:8px; font-weight:bold;">Lien dynamique</label>
-        <a id="dynamicLink" href="https://eessai.com/" target="_blank">https://eessai.com/</a>
-        <legend>Ce lien change dynamiquement selon la valeur du champ "Query" ci-dessus.</legend>
+        <a id="dynamicLink" href="https://example.com/" target="_blank">[Unknown]</a>
+        <legend>This link changes dynamically according to the value of the "Query" field above.</legend>
     </div>
     <script>
-    document.getElementById('my_search').addEventListener('input', function() {
-        const value = this.value.trim();
-        const link = document.getElementById('dynamicLink');
-        link.href = 'https://eessai.com/' + encodeURIComponent(value);
-        link.textContent = 'https://eessai.com/' + value;
-    });
+        document.getElementById('my_search').addEventListener('input', function() {
+            value = this.value.trim().toUpperCase();
+            link = document.getElementById('dynamicLink');
+            strSnowId = value.toUpperCase().trim();
+            strOrganization = document.getElementById('organization').value;
+            baseUrl = `https://${strOrganization}.service-now.com/`;
+            strUrl = baseUrl;
+            
+            if (strSnowId.startsWith("VIT")) {
+                strUrl += 'nav_to.do?uri=%2Fsn_vul_vulnerable_item.do%3Fsysparm_query%3Dnumber%3D' + strSnowId;
+            }
+            else if (strSnowId.startsWith("SNSVC")) {
+                strUrl += 'nav_to.do?uri=%2Fcmdb_ci_service_discovered.do%3Fsysparm_query%3Dnumber%3D' + strSnowId;
+            }
+            else if (strSnowId.startsWith("ENG")) {
+                strUrl += 'nav_to.do?uri=%2Fsn_audit_engagement_list.do%3Fsysparm_query%3Dnumber%3D' + strSnowId;
+            }
+            else if (strSnowId.startsWith("RITM")) {
+                strUrl += 'nav_to.do?uri=%2Fsc_req_item.do%3Fsysparm_query%3Dnumber%3D' + strSnowId;
+            }
+            else if (strSnowId.startsWith("TASK")) {
+                strUrl += 'nav_to.do?uri=%2Ftask.do%3Fsysparm_query%3Dnumber%3D' + strSnowId;
+            }
+            else if (strSnowId.startsWith("INC")) {
+                strUrl += 'nav_to.do?uri=%2Fincident.do%3Fsysparm_query%3Dnumber%3D' + strSnowId;
+            }
+            else if (strSnowId.startsWith("PROB")) {
+                strUrl += 'nav_to.do?uri=%2Fproblem.do%3Fsysparm_query%3Dnumber%3D' + strSnowId;
+            }
+            else if (strSnowId.startsWith("CHG")) {
+                strUrl += 'nav_to.do?uri=%2Fchange_request.do%3Fsysparm_query%3Dnumber%3D' + strSnowId;
+            }
+            else if (strSnowId.startsWith("CR")) {
+                strUrl += 'nav_to.do?uri=%2Fchange_request.do%3Fsysparm_query%3Dnumber%3D' + strSnowId;
+            }
+            else if (strSnowId.startsWith("REQ")) {
+                strUrl += 'nav_to.do?uri=%2Fsc_request.do%3Fsysparm_query%3Dnumber%3D' + strSnowId;
+            }
+            else if (strSnowId.startsWith("TASK")) {
+                strUrl += 'nav_to.do?uri=%2Ftask.do%3Fsysparm_query%3Dnumber%3D' + strSnowId;
+            }
+            else if (strSnowId.startsWith("KB")) {
+                strUrl += 'nav_to.do?uri=%2Fkb_knowledge.do%3Fsysparm_query%3Dnumber%3D' + strSnowId;
+            }
+            else if (strSnowId.startsWith("CAT")) {
+                strUrl += 'nav_to.do?uri=%2Fcn_catalog_category.do%3Fsysparm_query%3Dnumber%3D' + strSnowId;
+            }
+            else if (strSnowId.startsWith("SCAT")) {
+                strUrl += 'nav_to.do?uri=%2Fcn_catalog_category.do%3Fsysparm_query%3Dnumber%3D' + strSnowId;
+            }
+            else if (strSnowId.startsWith("CI")) {
+                strUrl += 'nav_to.do?uri=%2Fcmdb_ci.do%3Fsysparm_query%3Dnumber%3D' + strSnowId;
+            }
+            else if (strSnowId.startsWith("CMDB")) {
+                strUrl += 'nav_to.do?uri=%2Fcmdb_ci.do%3Fsysparm_query%3Dnumber%3D' + strSnowId;
+            }
+            else if (strSnowId.startsWith("ASSET")) {
+                strUrl += 'nav_to.do?uri=%2Falm_asset.do%3Fsysparm_query%3Dnumber%3D' + strSnowId;
+            }
+            else if (strSnowId.startsWith("ALM")) {
+                strUrl += 'nav_to.do?uri=%2Falm_asset.do%3Fsysparm_query%3Dnumber%3D' + strSnowId;
+            }
+            else {
+                strSnowId = 'Unknown'
+            }
+
+            link.href = strUrl;
+            link.textContent = '[' + strSnowId + ']';
+        });
     </script>
 
     <span id="config"></span>
